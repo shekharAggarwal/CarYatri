@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#DDDDDD</color>
+    <color name="dark_primary_text_color_87">#000000</color>
+    <color name="dark_divider_color_12">#dddddd</color>
+    <color name="dark_secondary_text_color_54">#747474</color>
+    <color name="color_black_87">#000000</color>
+    <color name="color_black_54">#747474</color>
+    <color name="grey_after_alpha">#747474</color>
+    <color name="colorHorizontalDivider">#bfa3d1</color>
+    <color name="rippleeffectcolor">#1ca667</color>
+    <color name="dark_divider_color_11">#e6e6e6</color>
+    <color name="overlayBackground">#7f333639</color>
+
+</resources>
