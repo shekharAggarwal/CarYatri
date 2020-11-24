@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -15,7 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
 
 import com.caryatri.caryatri.Common.Common;
 import com.caryatri.caryatri.Network.ConnectivityReceiver;
@@ -59,21 +58,9 @@ public class RegisterActivity extends CrashActivity implements ConnectivityRecei
         btnRegister = findViewById(R.id.btnRegister);
         txtBackLogin = findViewById(R.id.txtBackLogin);
 
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        btnRegister.setOnClickListener(view -> check_data());
 
-                check_data();
-            }
-        });
-
-        txtBackLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-
-            }
-        });
+        txtBackLogin.setOnClickListener(view -> onBackPressed());
 
     }
 
@@ -105,13 +92,6 @@ public class RegisterActivity extends CrashActivity implements ConnectivityRecei
             edtUserEmail.requestFocus();
             return;
         }
-//        Matcher n = pattern.matcher(edtPassword.getText().toString());
-//        boolean bo = n.find();
-//        if (bo) {
-//            edtPassword.setError("Password Can't contain special Characters");
-//            edtPassword.requestFocus();
-//            return;
-//        }
         if (edtPhoneNumber.getText().toString().isEmpty() || edtPhoneNumber.getText().toString().length() < 10) {
             edtPhoneNumber.setError("Check Phone Number");
             edtPhoneNumber.requestFocus();
@@ -121,10 +101,9 @@ public class RegisterActivity extends CrashActivity implements ConnectivityRecei
         mService.CheckUserExists(edtUserEmail.getText().toString(), edtPhoneNumber.getText().toString())
                 .enqueue(new Callback<CheckUserResponse>() {
                     @Override
-                    public void onResponse(Call<CheckUserResponse> call, Response<CheckUserResponse> response) {
+                    public void onResponse(@NonNull Call<CheckUserResponse> call, @NonNull Response<CheckUserResponse> response) {
                         if (response != null) {
                             CheckUserResponse checkUserResponse = response.body();
-//                            Toast.makeText(RegisterActivity.this, ""+checkUserResponse.getError_msg(), Toast.LENGTH_SHORT).show();
                             if (checkUserResponse.getError_msg().equals("ok")) {
                                 Common.fromActivity = "reg";
                                 Common.AuthPhone = edtPhoneNumber.getText().toString();
@@ -137,12 +116,11 @@ public class RegisterActivity extends CrashActivity implements ConnectivityRecei
                                 Snackbar.make(rootLayout, "" + checkUserResponse.getError_msg(),
                                         Snackbar.LENGTH_LONG).show();
                             }
-
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<CheckUserResponse> call, Throwable t) {
+                    public void onFailure(@NonNull Call<CheckUserResponse> call, @NonNull Throwable t) {
                         Toast.makeText(RegisterActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -185,13 +163,7 @@ public class RegisterActivity extends CrashActivity implements ConnectivityRecei
                         TRANSPARENT);
             }
 
-            findViewById(R.id.btnTry).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    recreate();
-
-                }
-            });
+            findViewById(R.id.btnTry).setOnClickListener(view -> recreate());
         }
     }
 

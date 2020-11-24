@@ -30,8 +30,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MultiCurrentDriver"></activity>
+
         <activity android:name=".FirstMapDriverActivity" />
+        <activity
+            android:name="com.google.firebase.auth.internal.FederatedSignInActivity"
+            tools:replace="android:launchMode"
+            android:launchMode="standard" />
         <activity
             android:name=".CancelCabActivity"
             android:screenOrientation="portrait" />
@@ -46,9 +50,6 @@
         <activity
             android:name=".MapDriver"
             android:label="@string/title_activity_map_driver"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".CurrentDriver"
             android:screenOrientation="portrait" />
         <activity
             android:name=".MyTripActivity"

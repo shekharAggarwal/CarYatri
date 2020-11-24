@@ -507,7 +507,7 @@ public class FragmentOneWay extends Fragment {
                 "origins=" + pickUp +
                 "&destinations=" + drop +
                 "&departure_time=now" +
-                "&key=<Your-Key>";
+                "&key=<your-key>";
         mGoogle.getPath(distanceQuery).enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {

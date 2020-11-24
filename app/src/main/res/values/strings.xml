@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">GAG</string>
     <string name="btn_login">Login</string>
+    <string name="google_maps_key">Your-key</string>
     <string name="btn_change">Change Password</string>
     <string name="btn_register">Register</string>
     <string name="btn_otp">OTP</string>
