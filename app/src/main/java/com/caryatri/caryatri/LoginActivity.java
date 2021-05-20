@@ -19,6 +19,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.caryatri.caryatri.Common.Common;
 import com.caryatri.caryatri.Database.CurrentDriver.CurrentDriverDB;
 import com.caryatri.caryatri.Database.CurrentDriver.CurrentDriverDataSource;
@@ -85,59 +87,50 @@ public class LoginActivity extends CrashActivity implements ConnectivityReceiver
         txtCreateAccount = findViewById(R.id.txtCreateAccount);
         txtForgetPassword = findViewById(R.id.txtForgetPassword);
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        btnLogin.setOnClickListener(view -> {
+            btnLogin.setEnabled(false);
+            if (edtUserEmail.getText().toString().trim().isEmpty()
+                    || !edtUserEmail.getText().toString().contains("@")) {
+                edtUserEmail.setError("check your registered Email");
                 btnLogin.setEnabled(false);
-                if (edtUserEmail.getText().toString().trim().isEmpty()
-                        || !edtUserEmail.getText().toString().contains("@")) {
-                    edtUserEmail.setError("check your registered Email");
-                    btnLogin.setEnabled(false);
-                    edtUserEmail.requestFocus();
-                    return;
-                }
-                if (edtPassword.getText().toString().trim().isEmpty()
-                        || edtPassword.getText().toString().trim().replaceAll(" ", "").isEmpty() ||
-                        edtPassword.getText().toString().trim().length() < 6) {
-                    edtPassword.setError("check your Password");
-                    btnLogin.setEnabled(false);
-                    edtPassword.requestFocus();
-                    return;
-                }
-                if (!edtUserEmail.getText().toString().isEmpty() && !edtPassword.getText().toString().isEmpty())
-                    LoginUser();
+                edtUserEmail.requestFocus();
+                return;
             }
+            if (edtPassword.getText().toString().trim().isEmpty()
+                    || edtPassword.getText().toString().trim().replaceAll(" ", "").isEmpty() ||
+                    edtPassword.getText().toString().trim().length() < 6) {
+                edtPassword.setError("check your Password");
+                btnLogin.setEnabled(false);
+                edtPassword.requestFocus();
+                return;
+            }
+            if (!edtUserEmail.getText().toString().isEmpty() && !edtPassword.getText().toString().isEmpty())
+                LoginUser();
         });
 
-        txtCreateAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-                Pair[] pairs = new Pair[1];
-                pairs[0] = new Pair<View, String>(logo, "imageTransition");
-                ActivityOptions options;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    options = ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this, pairs);
-                    startActivity(intent, options.toBundle());
-                } else
-                    startActivity(intent);
-            }
+        txtCreateAccount.setOnClickListener(view -> {
+            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+            Pair[] pairs = new Pair[1];
+            pairs[0] = new Pair<View, String>(logo, "imageTransition");
+            ActivityOptions options;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                options = ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this, pairs);
+                startActivity(intent, options.toBundle());
+            } else
+                startActivity(intent);
         });
 
-        txtForgetPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        txtForgetPassword.setOnClickListener(view -> {
 
-                Intent intent = new Intent(LoginActivity.this, ForgotActivity.class);
-                Pair[] pairs = new Pair[1];
-                pairs[0] = new Pair<View, String>(logo, "imageTransition");
-                ActivityOptions options;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    options = ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this, pairs);
-                    startActivity(intent, options.toBundle());
-                } else
-                    startActivity(intent);
-            }
+            Intent intent = new Intent(LoginActivity.this, ForgotActivity.class);
+            Pair[] pairs = new Pair[1];
+            pairs[0] = new Pair<View, String>(logo, "imageTransition");
+            ActivityOptions options;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                options = ActivityOptions.makeSceneTransitionAnimation(LoginActivity.this, pairs);
+                startActivity(intent, options.toBundle());
+            } else
+                startActivity(intent);
         });
 
 
@@ -147,10 +140,9 @@ public class LoginActivity extends CrashActivity implements ConnectivityReceiver
         mService.getUserInfo(edtUserEmail.getText().toString(), edtPassword.getText().toString())
                 .enqueue(new Callback<User>() {
                     @Override
-                    public void onResponse(Call<User> call, Response<User> response) {
+                    public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                         Common.currentUser = response.body();
                         if (Common.currentUser != null) {
-                            assert Common.currentUser != null;
                             if (Common.currentUser.getError_msg() == null) {
                                 Paper.book().write("email", edtUserEmail.getText().toString());
                                 Paper.book().write("password", edtPassword.getText().toString());
@@ -170,7 +162,7 @@ public class LoginActivity extends CrashActivity implements ConnectivityReceiver
                     }
 
                     @Override
-                    public void onFailure(Call<User> call, Throwable t) {
+                    public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
                         Log.d("ERROR", t.getMessage());
                         Toast.makeText(LoginActivity.this, "try Again", Toast.LENGTH_SHORT).show();
                     }
@@ -182,12 +174,10 @@ public class LoginActivity extends CrashActivity implements ConnectivityReceiver
         initDB();
         mService.getLocalDatabase(Common.currentUser.getPhone()).enqueue(new Callback<LocalDatabaseOfUser>() {
             @Override
-            public void onResponse(Call<LocalDatabaseOfUser> call, Response<LocalDatabaseOfUser> response) {
+            public void onResponse(@NonNull Call<LocalDatabaseOfUser> call, @NonNull Response<LocalDatabaseOfUser> response) {
                 if (response.body() != null) {
                     if (check == 0) {
                         check = 1;
-                        Log.d("ERROR", new Gson().toJson(response.body()));
-
                         List<NotificationDB> notificationDBList = new Gson().fromJson(response.body().getNotificationDB(), new TypeToken<List<NotificationDB>>() {
                         }.getType());
                         if (notificationDBList != null)
@@ -238,7 +228,7 @@ public class LoginActivity extends CrashActivity implements ConnectivityReceiver
             }
 
             @Override
-            public void onFailure(Call<LocalDatabaseOfUser> call, Throwable t) {
+            public void onFailure(@NonNull Call<LocalDatabaseOfUser> call, @NonNull Throwable t) {
                 Log.d("ERROR", t.getMessage());
                 Toast.makeText(LoginActivity.this, "try again to login", Toast.LENGTH_SHORT).show();
 
@@ -274,13 +264,7 @@ public class LoginActivity extends CrashActivity implements ConnectivityReceiver
                         TRANSPARENT);
             }
 
-            findViewById(R.id.btnTry).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    recreate();
-
-                }
-            });
+            findViewById(R.id.btnTry).setOnClickListener(view -> recreate());
         }
     }
 

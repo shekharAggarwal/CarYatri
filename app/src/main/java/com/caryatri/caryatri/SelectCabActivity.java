@@ -433,50 +433,43 @@ public class SelectCabActivity extends CrashActivity implements ConnectivityRece
         compositeDisposable.add(mService.getCab(Common.CabType, Common.tripDetailOneWay.getFrom().toUpperCase())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<List<Cab>>() {
-                    @Override
-                    public void accept(List<Cab> cabs) throws Exception {
-                        Log.d("ERROR", new Gson().toJson(cabs));
-                        if (cabs != null)
-                            if (cabs.size() != 0) {
-                                cabsArr = cabs;
-                                VehicleList = new ArrayList<>();
-                                VehicleList.add("SELECT CAB BRAND");
-                                for (int i = 0; i < cabs.size(); i++) {
-                                    boolean isChecked = false;
-                                    if (VehicleList.size() != 0) {
-                                        for (int p = 0; p < VehicleList.size(); p++) {
-                                            if (VehicleList.get(p).equals(cabs.get(i).getCabBrand())) {
-                                                isChecked = false;
-                                                break;
-                                            } else
-                                                isChecked = true;
-                                        }
-                                        if (isChecked)
-                                            VehicleList.add(cabs.get(i).getCabBrand());
-                                    } else
+                .subscribe(cabs -> {
+                    if (cabs != null)
+                        if (cabs.size() != 0) {
+                            cabsArr = cabs;
+                            VehicleList = new ArrayList<>();
+                            VehicleList.add("SELECT CAB BRAND");
+                            for (int i = 0; i < cabs.size(); i++) {
+                                boolean isChecked = false;
+                                if (VehicleList.size() != 0) {
+                                    for (int p = 0; p < VehicleList.size(); p++) {
+                                        if (VehicleList.get(p).equals(cabs.get(i).getCabBrand())) {
+                                            isChecked = false;
+                                            break;
+                                        } else
+                                            isChecked = true;
+                                    }
+                                    if (isChecked)
                                         VehicleList.add(cabs.get(i).getCabBrand());
-                                }
-                                actVehicle.setItems(VehicleList);
-                                swipeRefreshLayout.setRefreshing(false);
-                            } else {
-                                Toast.makeText(SelectCabActivity.this, "No cab available for your source place!", Toast.LENGTH_SHORT).show();
-                                onBackPressed();
+                                } else
+                                    VehicleList.add(cabs.get(i).getCabBrand());
                             }
-                        else {
-                            Toast.makeText(SelectCabActivity.this, "Try again to book cab", Toast.LENGTH_SHORT).show();
+                            actVehicle.setItems(VehicleList);
+                            swipeRefreshLayout.setRefreshing(false);
+                        } else {
+                            Toast.makeText(SelectCabActivity.this, "No cab available for your source place!", Toast.LENGTH_SHORT).show();
                             onBackPressed();
                         }
+                    else {
+                        Toast.makeText(SelectCabActivity.this, "Try again to book cab", Toast.LENGTH_SHORT).show();
+                        onBackPressed();
                     }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        VehicleList = new ArrayList<>();
-                        VehicleList.add("SELECT CAB BRAND");
-                        actVehicle.setItems(VehicleList);
-                        swipeRefreshLayout.setRefreshing(false);
-                        Log.d("ERROR", throwable.getMessage());
-                    }
+                }, throwable -> {
+                    VehicleList = new ArrayList<>();
+                    VehicleList.add("SELECT CAB BRAND");
+                    actVehicle.setItems(VehicleList);
+                    swipeRefreshLayout.setRefreshing(false);
+                    Log.d("ERROR", throwable.getMessage());
                 }));
     }
 

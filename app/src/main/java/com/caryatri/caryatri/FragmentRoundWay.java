@@ -582,7 +582,7 @@ public class FragmentRoundWay extends Fragment {
                 "origins=" + pickUp +
                 "&destinations=" + drop +
                 "&departure_time=now" +
-                "&key=<your-key>";
+                "&key=Your-Key";
         mGoogle.getPath(distanceQuery).enqueue(new Callback<Object>() {
             @Override
             public void onResponse(Call<Object> call, Response<Object> response) {

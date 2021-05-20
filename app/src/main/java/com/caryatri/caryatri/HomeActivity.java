@@ -200,23 +200,14 @@ public class HomeActivity extends CrashActivity implements ConnectivityReceiver.
         compositeDisposable.add(Common.currentDriverRepository.getInvoice()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(new Consumer<List<CurrentDriverDB>>() {
-                    @Override
-                    public void accept(List<CurrentDriverDB> currentDriverDBS) throws Exception {
-                        Trip trip = new Gson().fromJson(currentDriverDBS.get(0).CabDetails, Trip.class);
-                        Common.id = trip.getId();
-                        Intent intent = new Intent(getBaseContext(), InvoiceActivity.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                        LocalBroadcastManager.getInstance(HomeActivity.this).sendBroadcast(new Intent(Common.OK));
-                    }
-
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        Log.d("ERROR", throwable.getMessage());
-                    }
-                }));
+                .subscribe(currentDriverDBS -> {
+                    Trip trip = new Gson().fromJson(currentDriverDBS.get(0).CabDetails, Trip.class);
+                    Common.id = trip.getId();
+                    Intent intent = new Intent(getBaseContext(), InvoiceActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    LocalBroadcastManager.getInstance(HomeActivity.this).sendBroadcast(new Intent(Common.OK));
+                }, throwable -> Log.d("ERROR", throwable.getMessage())));
 
     }
 
@@ -246,34 +237,26 @@ public class HomeActivity extends CrashActivity implements ConnectivityReceiver.
     private void updateToken() {
         FirebaseInstanceId.getInstance()
                 .getInstanceId()
-                .addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
-                    @Override
-                    public void onSuccess(InstanceIdResult instanceIdResult) {
-                        ICarYatri mService = Common.getAPI();
-                        mService.updateToken(Common.currentUser.getPhone(),
-                                instanceIdResult.getToken(),
-                                "0")
-                                .enqueue(new Callback<String>() {
-                                    @Override
-                                    public void onResponse(Call<String> call, Response<String> response) {
-                                        Log.d("DEBUG2", response.body());
-                                    }
+                .addOnSuccessListener(instanceIdResult -> {
+                    ICarYatri mService = Common.getAPI();
+                    mService.updateToken(Common.currentUser.getPhone(),
+                            instanceIdResult.getToken(),
+                            "0")
+                            .enqueue(new Callback<String>() {
+                                @Override
+                                public void onResponse(Call<String> call, Response<String> response) {
+                                    Log.d("DEBUG2", response.body());
+                                }
 
-                                    @Override
-                                    public void onFailure(Call<String> call, Throwable t) {
-                                        Log.d("DEBUG1", t.getMessage());
+                                @Override
+                                public void onFailure(Call<String> call, Throwable t) {
+                                    Log.d("DEBUG1", t.getMessage());
 
-                                    }
-                                });
+                                }
+                            });
 
-                    }
                 })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(HomeActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+                .addOnFailureListener(e -> Toast.makeText(HomeActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show());
 
     }
 
@@ -353,13 +336,7 @@ public class HomeActivity extends CrashActivity implements ConnectivityReceiver.
                         TRANSPARENT);
             }
 
-            findViewById(R.id.btnTry).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    recreate();
-
-                }
-            });
+            findViewById(R.id.btnTry).setOnClickListener(view -> recreate());
         }
     }
 
