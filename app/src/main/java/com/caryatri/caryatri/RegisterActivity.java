@@ -121,7 +121,7 @@ public class RegisterActivity extends CrashActivity implements ConnectivityRecei
 
                     @Override
                     public void onFailure(@NonNull Call<CheckUserResponse> call, @NonNull Throwable t) {
-                        Toast.makeText(RegisterActivity.this, "" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterActivity.this, "chill kiasi" + t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
 
