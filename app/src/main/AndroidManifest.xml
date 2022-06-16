@@ -31,11 +31,18 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
 
+        <activity
+            android:name=".NewRegister"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".New.NewLogin"
+            android:screenOrientation="portrait" />
         <activity android:name=".FirstMapDriverActivity" />
         <activity
             android:name="com.google.firebase.auth.internal.FederatedSignInActivity"
-            tools:replace="android:launchMode"
-            android:launchMode="standard" />
+            android:launchMode="standard"
+            tools:replace="android:launchMode" />
         <activity
             android:name=".CancelCabActivity"
             android:screenOrientation="portrait" />

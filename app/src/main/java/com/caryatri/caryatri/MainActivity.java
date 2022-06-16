@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.caryatri.caryatri.Common.Common;
 import com.caryatri.caryatri.Network.ConnectivityReceiver;
 import com.caryatri.caryatri.Network.MyApplication;
+import com.caryatri.caryatri.New.NewLogin;
 import com.caryatri.caryatri.model.User;
 import com.caryatri.caryatri.retrofit.ICarYatri;
 
@@ -68,7 +69,7 @@ public class MainActivity extends CrashActivity implements ConnectivityReceiver.
                                     @Override
                                     public void run() {
                                         animation.cancel();
-                                        Intent mainIntent = new Intent(MainActivity.this, HomeActivity.class);
+                                        Intent mainIntent = new Intent(MainActivity.this, NewLogin.class);
                                         startActivity(mainIntent);
                                         finish();
                                     }
@@ -78,7 +79,7 @@ public class MainActivity extends CrashActivity implements ConnectivityReceiver.
                                     @Override
                                     public void run() {
                                         animation.cancel();
-                                        Intent mainIntent = new Intent(MainActivity.this, LoginActivity.class);
+                                        Intent mainIntent = new Intent(MainActivity.this, NewLogin.class);
                                         Pair[] pairs = new Pair[1];
                                         pairs[0] = new Pair<View, String>(logo, "imageTransition");
                                         ActivityOptions options;
@@ -104,7 +105,7 @@ public class MainActivity extends CrashActivity implements ConnectivityReceiver.
                 @Override
                 public void run() {
                     animation.cancel();
-                    Intent mainIntent = new Intent(MainActivity.this, LoginActivity.class);
+                    Intent mainIntent = new Intent(MainActivity.this, NewLogin.class);
                     Pair[] pairs = new Pair[1];
                     pairs[0] = new Pair<View, String>(logo, "imageTransition");
                     ActivityOptions options;
