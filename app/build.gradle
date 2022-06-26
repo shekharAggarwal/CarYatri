@@ -9,11 +9,11 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
     buildToolsVersion "30.0.2"
     defaultConfig {
         applicationId "com.caryatri.caryatri"
-        minSdkVersion 17
+        minSdkVersion 19
         targetSdkVersion 30
         multiDexEnabled true
         versionCode 1
@@ -60,6 +60,9 @@ dependencies {
     implementation 'com.firebase:geofire-android:2.1.2'
     implementation 'com.google.firebase:firebase-database:19.5.1'
     implementation 'com.google.firebase:firebase-core:18.0.0'
+
+    implementation platform('com.google.firebase:firebase-bom:30.2.0')
+    implementation 'com.google.firebase:firebase-analytics'
 
     //Map services
     implementation 'com.google.android.gms:play-services-maps:17.0.0'

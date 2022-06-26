@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Fred/AndroidStudioProjects/CarYatri/app/src/main/res/drawable/backgroundrating.xml" value="0.1385" />
+        <entry key="..\:/Users/Fred/AndroidStudioProjects/CarYatri/app/src/main/res/drawable/btnbooknow.xml" value="0.1385" />
+        <entry key="..\:/Users/Fred/AndroidStudioProjects/CarYatri/app/src/main/res/drawable/button_ripple_drawable.xml" value="0.243" />
         <entry key="..\:/Users/Fred/AndroidStudioProjects/CarYatri/app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="..\:/Users/Fred/AndroidStudioProjects/CarYatri/app/src/main/res/layout/activity_new_login.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/Fred/AndroidStudioProjects/CarYatri/app/src/main/res/layout/activity_new_register.xml" value="0.16145833333333334" />
