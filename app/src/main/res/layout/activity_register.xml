@@ -64,7 +64,7 @@
                 android:fontFamily="@font/roboto_light"
                 android:hint="@string/txt_phone"
                 android:inputType="phone"
-                android:maxLength="10"
+                android:maxLength="14"
                 android:textAlignment="center"
                 android:textColor="@android:color/white"
                 android:textColorHint="@android:color/white"

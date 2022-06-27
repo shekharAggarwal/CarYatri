@@ -62,6 +62,7 @@ public class LoginActivity extends CrashActivity implements ConnectivityReceiver
     EditText edtUserEmail, edtPassword;
     ImageView logo;
     Button btnLogin;
+    Button loginTest;
     TextView txtCreateAccount, txtForgetPassword;
     ICarYatri mService;
     RelativeLayout rootLayout;
@@ -84,9 +85,16 @@ public class LoginActivity extends CrashActivity implements ConnectivityReceiver
         logo = findViewById(R.id.logo);
         rootLayout = findViewById(R.id.root_layout);
         btnLogin = findViewById(R.id.btnLogin);
+        loginTest = findViewById(R.id.loginTest);
         txtCreateAccount = findViewById(R.id.txtCreateAccount);
         txtForgetPassword = findViewById(R.id.txtForgetPassword);
 
+
+        loginTest.setOnClickListener(view -> {
+            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+            finish();
+            startActivity(intent);
+        });
         btnLogin.setOnClickListener(view -> {
             btnLogin.setEnabled(false);
             if (edtUserEmail.getText().toString().trim().isEmpty()

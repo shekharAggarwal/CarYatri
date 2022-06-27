@@ -60,6 +60,10 @@
                 android:textColorHint="@android:color/white"
                 tools:targetApi="lollipop" />
         </LinearLayout>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/loginTest"/>
 
         <Button
             android:id="@+id/btnLogin"

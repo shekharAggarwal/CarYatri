@@ -48,8 +48,6 @@ import com.caryatri.caryatri.retrofit.ICarYatri;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 import com.google.gson.Gson;
 import com.nex3z.notificationbadge.NotificationBadge;
 import com.squareup.picasso.MemoryPolicy;
@@ -161,7 +159,7 @@ public class HomeActivity extends CrashActivity implements ConnectivityReceiver.
                         Common.SearchedTextFrom = null;
                         pagerViewAdapter = new PagerViewAdapter(getSupportFragmentManager());
                         viewPager.setAdapter(pagerViewAdapter);
-                        updateToken();
+//                        updateToken();
                         onChangeTab(0);
                         if (Common.currentUser.getImage() != null) {
                             Picasso.get()
@@ -185,7 +183,7 @@ public class HomeActivity extends CrashActivity implements ConnectivityReceiver.
             Common.SearchedTextFrom = null;
             pagerViewAdapter = new PagerViewAdapter(getSupportFragmentManager());
             viewPager.setAdapter(pagerViewAdapter);
-            updateToken();
+//            updateToken();
             onChangeTab(0);
             if (Common.currentUser.getImage() != null) {
                 Picasso.get()
@@ -234,31 +232,31 @@ public class HomeActivity extends CrashActivity implements ConnectivityReceiver.
         }
     }
 
-    private void updateToken() {
-        FirebaseInstanceId.getInstance()
-                .getInstanceId()
-                .addOnSuccessListener(instanceIdResult -> {
-                    ICarYatri mService = Common.getAPI();
-                    mService.updateToken(Common.currentUser.getPhone(),
-                            instanceIdResult.getToken(),
-                            "0")
-                            .enqueue(new Callback<String>() {
-                                @Override
-                                public void onResponse(Call<String> call, Response<String> response) {
-                                    Log.d("DEBUG2", response.body());
-                                }
-
-                                @Override
-                                public void onFailure(Call<String> call, Throwable t) {
-                                    Log.d("DEBUG1", t.getMessage());
-
-                                }
-                            });
-
-                })
-                .addOnFailureListener(e -> Toast.makeText(HomeActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show());
-
-    }
+//    private void updateToken() {
+//        FirebaseInstanceId.getInstance()
+//                .getInstanceId()
+//                .addOnSuccessListener(instanceIdResult -> {
+//                    ICarYatri mService = Common.getAPI();
+//                    mService.updateToken(Common.currentUser.getPhone(),
+//                            instanceIdResult.getToken(),
+//                            "0")
+//                            .enqueue(new Callback<String>() {
+//                                @Override
+//                                public void onResponse(Call<String> call, Response<String> response) {
+//                                    Log.d("DEBUG2", response.body());
+//                                }
+//
+//                                @Override
+//                                public void onFailure(Call<String> call, Throwable t) {
+//                                    Log.d("DEBUG1", t.getMessage());
+//
+//                                }
+//                            });
+//
+//                })
+//                .addOnFailureListener(e -> Toast.makeText(HomeActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show());
+//
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
